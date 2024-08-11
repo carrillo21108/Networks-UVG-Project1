@@ -1,10 +1,10 @@
 import React from 'react';
-import XMPPConnection from './components/XMPPConnection';
+import Chat from './components/Chat';
 
 function App() {
   return (
     <div className="App">
-      <XMPPConnection />
+      <Chat />
     </div>
   );
 }
