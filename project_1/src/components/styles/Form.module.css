@@ -1,0 +1,38 @@
+/* src/components/Form.module.css */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%; /* Use a width relative to the parent container */
+  max-width: 400px; /* For larger screens */
+  margin: 0 auto; /* Center the form horizontally */
+  padding: 2em; /* Relative padding */
+  background-color: #f7f7f7; /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+input {
+  width: 100%; /* The input takes up 100% of the form's width */
+  padding: 0.75em; /* Padding relative to the font size */
+  margin-bottom: 1.5em; /* Space between inputs */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em; /* Relative to the base font size */
+}
+
+button {
+  width: 100%; /* The button takes up the full width of the form */
+  padding: 0.75em; /* Relative padding */
+  background-color: #2c3e50; /* Button background color */
+  color: #ecf0f1; /* Text color */
+  border: none;
+  border-radius: 4px;
+  font-size: 1.125em; /* Slightly larger than the base text size */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #34495e; /* Darker background on hover */
+}

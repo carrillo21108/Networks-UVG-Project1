@@ -1,0 +1,16 @@
+/* src/App.css */
+.appContainer {
+  width: 100%;
+  display: flex;
+}
+
+.content {
+  margin-left: 20vw; /* Shifts the content to the right of the side menu */
+  width: calc(100% - 20vw); /* Adjusts the width to occupy the remaining space */
+  padding: 2em; /* Using em for relative padding */
+}
+
+.fullContent {
+  width: 100%; /* Occupies the full width if there is no side menu */
+  padding: 2em; /* Using em for relative padding */
+}
