@@ -15,7 +15,7 @@ const SideMenu = () => {
             <Link to="/chats">Chats</Link>
           </li>
           <li>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/contacts">Contacs</Link>
           </li>
         </ul>
       </nav>

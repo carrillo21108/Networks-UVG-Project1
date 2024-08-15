@@ -4,6 +4,8 @@ import LoginPage from "./pages/LoginPage";
 import ChatsPage from "./pages/ChatsPage";
 import SignUpPage from "./pages/SignUpPage";
 import SideMenu from "./components/SideMenu";
+import ContactsPage from "./pages/ContactsPage";
+
 import styles from './App.module.css';
 
 import { XMPPClientProvider } from './contexts/XMPPClientContext';
@@ -28,6 +30,7 @@ const App = () => {
             />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/chats" element={isAuthenticated ? <ChatsPage /> : <Navigate to="/" />} />
+            <Route path="/contacts" element={isAuthenticated ? <ContactsPage /> : <Navigate to="/" />} />
           </Routes>
         </div>
       </div>

@@ -4,6 +4,7 @@ export class XMPPClient {
   constructor(url) {
     // "ws://alumchat.lol:7070/ws/"
     this.connection = new Strophe.Connection(url); // Initialize the connection; // Declare the connection variable
+    this.roster = {}; // Declare the roster object
   }
 
   connect(jid, password, onConnect) {
@@ -64,6 +65,33 @@ export class XMPPClient {
         onError(new Error("Failed to connect to XMPP server"));
       }
     });
+  }
+
+  fetchRoster(onRosterReceived) {
+    const rosterIQ = $iq({ 
+      type: "get" 
+    }).c("query", { xmlns: "jabber:iq:roster" });
+
+    this.connection.sendIQ(rosterIQ, (iq) => {
+      const contacts = {};
+      const items = iq.getElementsByTagName("item");
+      for (let i = 0; i < items.length; i++) {
+        const jid = items[i].getAttribute("jid");
+        contacts[jid] = { jid, status: "offline" };
+      }
+      this.roster = contacts;
+      onRosterReceived({ ...this.roster }); // Trigger the first state update
+    });
+
+    // Listen for presence updates
+    this.connection.addHandler((presence) => {
+      const from = Strophe.getBareJidFromJid(presence.getAttribute("from")); // Normalize to bare JID
+      const show = presence.getElementsByTagName("show")[0]?.textContent || "online";
+
+      this.roster[from].status = show;
+
+      onRosterReceived({ ...this.roster }); // Trigger a re-render with a new object
+    }, null, "presence");
   }
 
 }

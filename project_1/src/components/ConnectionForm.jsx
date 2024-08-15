@@ -27,7 +27,7 @@ const ConnectionForm = ({ onConnect }) => {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
       />
-      <button type="submit" className={styles.button}>Conectar</button>
+      <button type="submit" className={styles.button}>Connect</button>
     </form>
   );
 };

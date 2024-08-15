@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
 import { useXMPPClient } from '../contexts/XMPPClientContext';
 
+import styles from './styles/SignUpPage.module.css'; // Import the CSS module
+
 const SignUpPage = () => {
   const navigate = useNavigate();
   const client = useXMPPClient();
@@ -24,9 +26,11 @@ const SignUpPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.signUpPage}>
       <h1>Sign Up</h1>
-      <SignUpForm onSignUp={handleSignUp} />
+      <div className={styles.connectionForm}>
+        <SignUpForm onSignUp={handleSignUp} />
+      </div>
     </div>
   );
 };

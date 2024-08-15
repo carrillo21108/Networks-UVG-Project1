@@ -43,7 +43,7 @@ const SignUpForm = ({ onSignUp }) => {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
       />
-      <button type="submit">Registrarse</button>
+      <button type="submit">Register</button>
     </form>
   );
 };
