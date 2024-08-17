@@ -1,5 +1,8 @@
 /* src/components/SideMenu.module.css */
 .sideMenu {
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  justify-content: space-between; /* Distribute space evenly, pushing last child (logout) to the bottom */
   width: 20vw; /* 20% of the viewport width */
   max-width: 300px; /* Ensure a maximum width for very large screens */
   min-width: 200px; /* Ensure a minimum width for very small screens */
@@ -17,6 +20,7 @@
   list-style: none;
   padding: 0;
   margin: 0; /* Remove margins to ensure consistency */
+  flex-grow: 1; /* Allow the nav list to grow, pushing the logout link down */
 }
 
 .sideMenu nav ul li {
@@ -30,5 +34,21 @@
 }
 
 .sideMenu nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.logoutLink {
+  margin-top: auto; /* Push the logout link to the bottom */
+  color: #e74c3c; /* Give it a distinct color (e.g., red) */
+  text-align: center; /* Center the logout link horizontally */
+}
+
+.logoutLink a {
+  text-decoration: none;
+  color: inherit; /* Inherit the color from the parent */
+  font-size: 1.125em;
+}
+
+.logoutLink a:hover {
   text-decoration: underline;
 }

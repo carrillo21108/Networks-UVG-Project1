@@ -17,11 +17,15 @@ const App = () => {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   return (
     <XMPPClientProvider>
       <Router>
       <div className={styles.appContainer}>
-        {isAuthenticated && <SideMenu />}
+        {isAuthenticated && <SideMenu onLogout={handleLogout}/>}
         <div className={isAuthenticated ? styles.content : styles.fullContent}>
           <Routes>
             <Route

@@ -13,7 +13,6 @@ const LoginPage = ({ onLogin }) => {
 
   useEffect(() => {
     if (connected) {
-        console.log("Connected!");
         onLogin();
     }
     return () => {
@@ -26,7 +25,7 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className={styles.loginPage}>
-      <h1>Login</h1>
+      <h1>Log In</h1>
       <div className={styles.connectionForm}>
         <ConnectionForm onConnect={handleLogin} />
       </div>

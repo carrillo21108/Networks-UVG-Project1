@@ -7,7 +7,8 @@ const ContactsPage = () => {
   const [contacts, setContacts] = useState({});
 
   useEffect(() => {
-    client.fetchRoster(setContacts);
+    client.setOnRosterReceived(setContacts);
+    client.fetchRoster();
   }, [client]);
 
   return (
