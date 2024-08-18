@@ -17,13 +17,18 @@ const ContactsPage = () => {
       <ul className={styles.contactList}>
         {Object.entries(contacts).map(([jid, contact]) => (
           <li key={jid} className={styles.contactItem}>
+            <div className={styles.circle}>
+              {contact.jid.charAt(0).toUpperCase()}
+            </div>
             <span className={styles.contactJid}>{contact.jid}</span>
-            <span className={`${styles.contactStatus} ${styles[contact.status]}`}>
-              {contact.status}
-            </span>
-            <span className={styles.contactStatusMessage}>
-              {contact.statusMessage || "No status message"}
-            </span>
+            <div className={styles.statusContainer}>
+              <span className={`${styles.contactStatus} ${styles[contact.status]}`}>
+                {contact.status}
+              </span>
+              <span className={styles.contactStatusMessage}>&#128488;&nbsp;
+                {contact.statusMessage || "No status message"}
+              </span>
+            </div>
           </li>
         ))}
       </ul>

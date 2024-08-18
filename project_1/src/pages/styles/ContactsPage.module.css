@@ -10,7 +10,7 @@
 
 .contactItem {
   display: flex;
-  justify-content: space-between;
+  align-items: center; /* Center items vertically */
   padding: 1em;
   margin-bottom: 1em;
   border: 1px solid #ccc;
@@ -18,24 +18,42 @@
   background-color: #f7f7f7;
 }
 
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Make the div a circle */
+  background-color: #3498db;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
 .contactJid {
   font-weight: bold;
   display: block;
-  margin-bottom: 0.5rem;
   color: #2c3e50;
+  flex-grow: 1; /* Allow JID to take up available space */
+}
+
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .contactStatus {
   font-size: 1rem;
   text-transform: capitalize;
-  margin-right: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .contactStatusMessage {
-  display: block;
-  font-size: 0.875rem;
+  font-size: 0.6rem;
   color: #7f8c8d;
-  margin-top: 0.25rem;
 }
 
 .online {

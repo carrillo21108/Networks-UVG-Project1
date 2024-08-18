@@ -112,8 +112,9 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box; /* Ensure padding is included in height */
-  margin-top: -23px; /* Align with input */
+  margin-top: -24px; /* Align with input */
   width: 1px; /* Ensure button is not wider than input */
+  height: 34px; /* Ensure button is not taller than input */
 }
 
 .updateButton:hover {
