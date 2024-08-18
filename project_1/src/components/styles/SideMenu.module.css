@@ -7,7 +7,7 @@
   max-width: 300px; /* Ensure a maximum width for very large screens */
   min-width: 200px; /* Ensure a minimum width for very small screens */
   height: 100vh; /* Full height of the viewport */
-  background-color: #2c3e50;
+  background-color: #5b7d9f;
   color: #ecf0f1;
   position: fixed;
   top: 0;
@@ -34,12 +34,12 @@
 }
 
 .sideMenu nav ul li a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .logoutLink {
   margin-top: auto; /* Push the logout link to the bottom */
-  color: #e74c3c; /* Give it a distinct color (e.g., red) */
+  color: #c73525; /* Give it a distinct color (e.g., red) */
   text-align: center; /* Center the logout link horizontally */
 }
 
@@ -50,5 +50,5 @@
 }
 
 .logoutLink a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }

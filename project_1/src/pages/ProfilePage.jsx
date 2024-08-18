@@ -1,13 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useXMPPClient } from '../contexts/XMPPClientContext';
 import styles from './styles/ProfilePage.module.css';
 
-const ProfilePage = () => {
+const ProfilePage = ({ onLogout }) => {
   const client = useXMPPClient();
 
   const [jidInitial, setJidInitial] = useState("");
   const [status, setStatus] = useState("online");
   const [statusMessage, setStatusMessage] = useState("Available");
+
+  // Hook
+  const [disconnected, setDisconnected] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (disconnected) {
+        onLogout();
+        navigate("/"); // Redirect to the login page
+    }
+    return () => {
+    };
+  }, [disconnected]);
+
+  const handleLogout = () => {
+    client.disconnect(); // Disconnect from the XMPP server
+    setDisconnected(true); // Update state to trigger the useEffect
+  };
 
   useEffect(() => {
     if (client) {
@@ -25,6 +44,10 @@ const ProfilePage = () => {
     if (client) {
       client.updateStatus(status, statusMessage);
     }
+  };
+
+  const handleDeleteAccount = () => {
+    client.deleteAccount(handleLogout);
   };
 
   return (
@@ -68,6 +91,13 @@ const ProfilePage = () => {
           </button>
         </div>
       </div>
+
+      <button
+        onClick={handleDeleteAccount}
+        className={styles.deleteButton}
+      >
+        &#9746; Delete Account
+      </button>
     </div>
   );
 };

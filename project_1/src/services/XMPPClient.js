@@ -2,7 +2,9 @@ import { Strophe, $pres, $msg, $iq } from "strophe.js";
 
 export class XMPPClient {
   constructor(url) {
-    this.connection = new Strophe.Connection(url); 
+    this.connection = new Strophe.Connection(url);
+    this.domain = "alumchat.lol";
+    
     this.roster = {}; 
     this.connection.addHandler(this.handlePresence.bind(this), null, "presence");
     this.onRosterReceived = () => {};
@@ -55,10 +57,9 @@ export class XMPPClient {
       if (status === Strophe.Status.CONNECTED) {
         console.log("Connected to XMPP server for registration");
 
-        const domain = "alumchat.lol";
         const registerIQ = $iq({
           type: "set",
-          to: domain,
+          to: this.domain,
         }).c("query", { xmlns: "jabber:iq:register" })
           .c("username").t(username).up()
           .c("password").t(password).up()
@@ -102,9 +103,11 @@ export class XMPPClient {
 
   handlePresence(presence) {
     console.log("Presence stanza received:", presence);
+
     const fullJid = presence.getAttribute("from");
     const from = Strophe.getBareJidFromJid(fullJid);
     const type = presence.getAttribute("type");
+
     let status = "";
     let statusMessage = "";
 
@@ -161,6 +164,19 @@ export class XMPPClient {
       } else {
         console.log("vCard not found");
       }
+    });
+  }
+
+  deleteAccount(onSuccess) {
+    const deleteIQ = $iq({ type: "set", to: this.domain })
+      .c("query", { xmlns: "jabber:iq:register" })
+      .c("remove");
+
+    this.connection.sendIQ(deleteIQ, (iq) => {
+      console.log("Account deletion successful", iq);
+      onSuccess();
+    }, (error) => {
+      console.error("Account deletion failed", error);
     });
   }
 }

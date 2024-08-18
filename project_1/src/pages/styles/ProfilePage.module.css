@@ -11,6 +11,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  position: relative;
 }
 
 .circle {
@@ -117,5 +118,23 @@
 
 .updateButton:hover {
   background-color: #2980b9;
+}
+
+.deleteButton {
+  margin-top: auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #c73525;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center; /* Center the button horizontally */
+  width: 30%;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
 }
 

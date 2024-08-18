@@ -37,7 +37,7 @@ const App = () => {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/chats" element={isAuthenticated ? <ChatsPage /> : <Navigate to="/" />} />
             <Route path="/contacts" element={isAuthenticated ? <ContactsPage /> : <Navigate to="/" />} />
-            <Route path="/profile" element={isAuthenticated ? <ProfilePage /> : <Navigate to="/" />} />
+            <Route path="/profile" element={isAuthenticated ? <ProfilePage onLogout={handleLogout}/> : <Navigate to="/" />} />
           </Routes>
         </div>
       </div>
