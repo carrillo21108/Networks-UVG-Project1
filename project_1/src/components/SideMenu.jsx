@@ -36,6 +36,9 @@ const SideMenu = ({ onLogout }) => {
           <li>
             <Link to="/contacts">Contacs</Link>
           </li>
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
         </ul>
       </nav>
 

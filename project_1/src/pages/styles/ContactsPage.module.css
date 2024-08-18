@@ -1,41 +1,44 @@
 /* src/pages/ContactsPage.module.css */
 .contactsPage {
-    padding: 2em;
-  }
-  
-  .contactList {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .contactItem {
-    display: flex;
-    justify-content: space-between;
-    padding: 1em;
-    margin-bottom: 1em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-  }
-  
-  .contactJid {
-    font-weight: bold;
-    color: black;
-  }
-  
-  .contactStatus {
-    text-transform: capitalize;
-  }
-  
-  .online {
-    color: green;
-  }
-  
-  .away {
-    color: orange;
-  }
-  
-  .offline {
-    color: red;
-  }
-  
+  padding: 2em;
+}
+
+.contactList {
+  list-style: none;
+  padding: 0;
+}
+
+.contactItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+}
+
+.contactJid {
+  font-weight: bold;
+  color: black;
+}
+
+.contactStatus {
+  text-transform: capitalize;
+}
+
+.online {
+  color: green;
+}
+
+.away {
+  color: orange;
+}
+
+.offline {
+  color: gray;
+}
+
+.dnd {
+  color: red;
+}
