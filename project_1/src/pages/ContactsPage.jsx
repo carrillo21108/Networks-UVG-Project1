@@ -21,6 +21,9 @@ const ContactsPage = () => {
             <span className={`${styles.contactStatus} ${styles[contact.status]}`}>
               {contact.status}
             </span>
+            <span className={styles.contactStatusMessage}>
+              {contact.statusMessage || "No status message"}
+            </span>
           </li>
         ))}
       </ul>

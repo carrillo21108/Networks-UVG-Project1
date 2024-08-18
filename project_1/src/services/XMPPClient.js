@@ -92,7 +92,7 @@ export class XMPPClient {
       const items = iq.getElementsByTagName("item");
       for (let i = 0; i < items.length; i++) {
         const jid = items[i].getAttribute("jid");
-        contacts[jid] = jid in this.roster ? this.roster[jid] : { jid, status: "offline" }; 
+        contacts[jid] = jid in this.roster ? this.roster[jid] : { jid, status: "offline", statusMessage:""}; 
         this.sendPresenceProbe(jid);
       }
       this.roster = contacts;
@@ -106,14 +106,17 @@ export class XMPPClient {
     const from = Strophe.getBareJidFromJid(fullJid);
     const type = presence.getAttribute("type");
     let status = "";
+    let statusMessage = "";
 
     if (type === "unavailable") {
       status = "offline";
+      statusMessage = "";
     } else {
       status = presence.getElementsByTagName("show")[0]?.textContent || "online";
+      statusMessage = presence.getElementsByTagName("status")[0]?.textContent || "Available";
     }
 
-    this.roster[from] = { jid: from, status };
+    this.roster[from] = { jid: from, status, statusMessage };
     this.onRosterReceived({ ...this.roster });
 
     return true;

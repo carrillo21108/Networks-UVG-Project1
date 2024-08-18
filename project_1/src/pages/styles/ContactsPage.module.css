@@ -20,11 +20,22 @@
 
 .contactJid {
   font-weight: bold;
-  color: black;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
 }
 
 .contactStatus {
+  font-size: 1rem;
   text-transform: capitalize;
+  margin-right: 1rem;
+}
+
+.contactStatusMessage {
+  display: block;
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  margin-top: 0.25rem;
 }
 
 .online {
