@@ -39,11 +39,14 @@ const SideMenu = ({ onLogout }) => {
           <li>
             <Link to="/profile">&#128100; Profile</Link>
           </li>
+          <li>
+            <Link to="/addContact">&#129309; Add Contact</Link>
+          </li>
         </ul>
       </nav>
 
       <div className={styles.logoutLink}>
-        <a href="/" onClick={handleLogout}>&#128274; Log out</a>
+        <a href="/" onClick={handleLogout}><b>&#128274; Log out</b></a>
       </div>
     </div>
   );

@@ -1,0 +1,21 @@
+/* src/pages/LoginPage.module.css */
+.addContactPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    min-height: 80vh; /* Full height of the viewport */
+    padding: 2em; /* Padding for some space around the content */
+    box-sizing: border-box; /* Include padding in width/height calculation */
+  }
+  
+  h1 {
+    margin-bottom: 1.5em; /* Space below the heading */
+    font-size: 2em; /* Adjust heading size as needed */
+  }
+  
+  .addContactForm {
+    width: 100%;
+    max-width: 400px; /* Ensure the form isn't too wide */
+    margin-bottom: 1.5em; /* Space below the form */
+  }

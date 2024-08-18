@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  min-height: 100vh; /* Full height of the viewport */
+  min-height: 80vh; /* Full height of the viewport */
   padding: 2em; /* Padding for some space around the content */
   box-sizing: border-box; /* Include padding in width/height calculation */
 }

@@ -7,6 +7,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SideMenu from "./components/SideMenu";
 import ContactsPage from "./pages/ContactsPage";
 import ProfilePage from "./pages/ProfilePage";
+import AddContactPage from "./pages/AddContactPage";
 
 import styles from './App.module.css';
 
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/chats" element={isAuthenticated ? <ChatsPage /> : <Navigate to="/" />} />
             <Route path="/contacts" element={isAuthenticated ? <ContactsPage /> : <Navigate to="/" />} />
             <Route path="/profile" element={isAuthenticated ? <ProfilePage onLogout={handleLogout}/> : <Navigate to="/" />} />
+            <Route path="/addContact" element={isAuthenticated ? <AddContactPage /> : <Navigate to="/" />} />
           </Routes>
         </div>
       </div>

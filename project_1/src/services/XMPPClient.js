@@ -179,4 +179,20 @@ export class XMPPClient {
       console.error("Account deletion failed", error);
     });
   }
+
+  addContact(jid, alias) {
+    const addContactIQ = $iq({ type: "set" })
+      .c("query", { xmlns: "jabber:iq:roster" })
+      .c("item", { jid: jid, name: alias });
+
+    this.connection.sendIQ(addContactIQ, (iq) => {
+      console.log(`Contact ${jid} added successfully`, iq);
+    }, (error) => {
+      console.error(`Failed to add contact ${jid}`, error);
+    });
+
+    // Optionally, you can send a subscription request (presence)
+    const presenceSubscribe = $pres({ to: jid, type: "subscribe" });
+    this.connection.send(presenceSubscribe.tree());
+  }
 }
