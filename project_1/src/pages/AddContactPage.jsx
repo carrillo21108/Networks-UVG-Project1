@@ -7,8 +7,8 @@ import styles from './styles/AddContactPage.module.css'; // Import the CSS modul
 const AddContactPage = ({ onLogin }) => {
   const client = useXMPPClient();
 
-  const handleAdd = (jid, alias) => {
-    client.addContact(jid, alias);
+  const handleAdd = (jid) => {
+    client.sendSubscriptionRequest(jid);
   };
 
   return (

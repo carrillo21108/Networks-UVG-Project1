@@ -7,8 +7,8 @@ const ProfilePage = ({ onLogout }) => {
   const client = useXMPPClient();
 
   const [jidInitial, setJidInitial] = useState("");
-  const [status, setStatus] = useState("online");
-  const [statusMessage, setStatusMessage] = useState("Available");
+  const [status, setStatus] = useState(client.status);
+  const [statusMessage, setStatusMessage] = useState(client.statusMessage);
 
   // Hook
   const [disconnected, setDisconnected] = useState(false);

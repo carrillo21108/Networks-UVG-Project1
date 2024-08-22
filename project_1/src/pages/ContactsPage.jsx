@@ -14,6 +14,9 @@ const ContactsPage = () => {
   return (
     <div className={styles.contactsPage}>
       <h1>Contacts</h1>
+      {Object.keys(contacts).length === 0 ? (
+        <p>No contacts added</p>
+      ) : (
       <ul className={styles.contactList}>
         {Object.entries(contacts).map(([jid, contact]) => (
           <li key={jid} className={styles.contactItem}>
@@ -32,6 +35,7 @@ const ContactsPage = () => {
           </li>
         ))}
       </ul>
+      )}
     </div>
   );
 };

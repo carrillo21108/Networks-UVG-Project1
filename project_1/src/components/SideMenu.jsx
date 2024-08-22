@@ -42,6 +42,9 @@ const SideMenu = ({ onLogout }) => {
           <li>
             <Link to="/addContact">&#129309; Add Contact</Link>
           </li>
+          <li>
+            <Link to="/notifications">&#128276; Notifications</Link>
+          </li>
         </ul>
       </nav>
 

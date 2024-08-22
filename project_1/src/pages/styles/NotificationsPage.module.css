@@ -1,0 +1,55 @@
+/* src/pages/styles/NotificationsPage.module.css */
+.notificationsPage {
+    padding: 2em;
+  }
+  
+  .requestsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .requestItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+  }
+  
+  .requestItem span {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  .acceptButton, .rejectButton {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    color: #fff;
+    width: auto;
+  }
+  
+  .acceptButton {
+    background-color: #2ecc71;
+    margin-right: 1rem;
+  }
+  
+  .acceptButton:hover {
+    background-color: #27ae60;
+  }
+  
+  .rejectButton {
+    background-color: #e74c3c;
+  }
+  
+  .rejectButton:hover {
+    background-color: #c0392b;
+  }
+  
