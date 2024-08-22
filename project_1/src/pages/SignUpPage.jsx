@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
 import { useXMPPClient } from '../contexts/XMPPClientContext';
@@ -28,9 +29,12 @@ const SignUpPage = () => {
   return (
     <div className={styles.signUpPage}>
       <h1>Sign Up</h1>
-      <div className={styles.connectionForm}>
+      <div className={styles.signUpForm}>
         <SignUpForm onSignUp={handleSignUp} />
       </div>
+      <Link to="/" className={styles.link}>
+        Already have an account? Log in here
+      </Link>
     </div>
   );
 };

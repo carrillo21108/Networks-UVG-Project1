@@ -19,3 +19,13 @@ h1 {
   max-width: 400px; /* Ensure the form isn't too wide */
   margin-bottom: 1.5em; /* Space below the form */
 }
+
+.link {
+  font-size: 1em; /* Adjust font size as needed */
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
