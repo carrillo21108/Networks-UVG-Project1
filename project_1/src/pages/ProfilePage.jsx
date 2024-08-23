@@ -96,7 +96,7 @@ const ProfilePage = ({ onLogout }) => {
         onClick={handleDeleteAccount}
         className={styles.deleteButton}
       >
-        &#9746; Delete Account
+        &#129529; Delete
       </button>
     </div>
   );

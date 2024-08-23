@@ -96,7 +96,8 @@ export class XMPPClient {
       for (let i = 0; i < items.length; i++) {
         const jid = items[i].getAttribute("jid");
         if (items[i].getAttribute("subscription") === "both") {
-          contacts[jid] = { jid, status: "online", statusMessage: "Available" };
+          contacts[jid] = this.roster[jid] || { jid, status: "offline", statusMessage: "" }; 
+          this.sendPresenceProbe(jid);
         }
       }
       this.roster = contacts;
