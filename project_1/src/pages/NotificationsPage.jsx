@@ -29,18 +29,20 @@ const NotificationsPage = () => {
           {requests.map((jid) => (
             <li key={jid} className={styles.requestItem}>
               <span>{jid}</span>
-              <button 
-                onClick={() => handleAccept(jid)} 
-                className={styles.acceptButton}
-              >
-                Accept
-              </button>
-              <button 
-                onClick={() => handleReject(jid)} 
-                className={styles.rejectButton}
-              >
-                Reject
-              </button>
+              <div>
+                <button 
+                  onClick={() => handleAccept(jid)} 
+                  className={styles.acceptButton}
+                >
+                  Accept
+                </button>
+                <button 
+                  onClick={() => handleReject(jid)} 
+                  className={styles.rejectButton}
+                >
+                  Reject
+                </button>
+              </div>
             </li>
           ))}
         </ul>

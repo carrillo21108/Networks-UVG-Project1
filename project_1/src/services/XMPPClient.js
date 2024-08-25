@@ -18,18 +18,21 @@ export class XMPPClient {
     this.jid = ""; 
     this.status = "online";
     this.statusMessage = "Available";
+
     this.onRosterReceived = () => {};
-    this.onSubscriptionReceived = () => {}; 
+    this.onSubscriptionReceived = () => {};
+    this.onMessageReceived = () => {}; 
   }
 
   connect(jid, password, onConnect) {
-    // Ensure handlers are set up correctly before connection is established
     this.connection.addHandler(this.handlePresence.bind(this), null, "presence");
+    this.connection.addHandler(this.handleMessage.bind(this), null, "message", null, null, null);
 
     this.connection.connect(jid, password, (status) => {
       if (status === Strophe.Status.CONNECTED) {
         this.jid = jid;
         this.sendPresence(this.status, this.statusMessage);
+        this.fetchOldMessages();
         onConnect();
       } else if (status === Strophe.Status.AUTHFAIL) {
         console.error("Authentication failed");
@@ -56,6 +59,56 @@ export class XMPPClient {
   sendMessage(to, body) {
     const message = $msg({ to, type: "chat" }).c("body").t(body);
     this.connection.send(message.tree());
+    console.log(`Message sent to ${to}: ${body}`);
+  }
+
+  handleMessage(message) {
+    const from = message.getAttribute("from");
+    const to = message.getAttribute("to");
+    const forwarded = message.getElementsByTagName("forwarded")[0];
+    
+    let body;
+    let originalFrom;
+    let originalTo;
+    let timestamp;
+  
+    if (forwarded) {
+      const forwardedMessage = forwarded.getElementsByTagName("message")[0];
+      originalFrom = forwardedMessage.getAttribute("from");
+      originalTo = forwardedMessage.getAttribute("to");
+      body = forwardedMessage.getElementsByTagName("body")[0]?.textContent;
+  
+      const delay = forwarded.getElementsByTagName("delay")[0];
+      if (delay) {
+        timestamp = new Date(delay.getAttribute("stamp"));
+      }
+
+    } else {
+      originalFrom = from;
+      originalTo = to;
+      body = message.getElementsByTagName("body")[0]?.textContent;
+  
+      timestamp = new Date();
+    }
+  
+    if (body) {
+      console.log(`Message received from ${Strophe.getBareJidFromJid(originalFrom)} at ${timestamp.toLocaleDateString()}: ${body}`);
+      this.onMessageReceived(originalTo, Strophe.getBareJidFromJid(originalFrom), body, timestamp); 
+    }
+  
+    return true;
+  }  
+
+  fetchOldMessages() {
+    const mamQueryIQ = $iq({ type: "set", id: "mam1" })
+      .c("query", { xmlns: "urn:xmpp:mam:2" })
+      .c("x", { xmlns: "jabber:x:data", type: "submit" })
+      .c("field", { var: "FORM_TYPE", type: "hidden" })
+      .c("value").t("urn:xmpp:mam:2").up().up()
+      .c("field", { var: "with" })
+      .c("value").t(this.jid).up().up();
+
+    this.connection.sendIQ(mamQueryIQ, null);
   }
 
   signup(username, fullName, email, password, onSuccess, onError) {
@@ -95,7 +148,7 @@ export class XMPPClient {
       const items = iq.getElementsByTagName("item");
       for (let i = 0; i < items.length; i++) {
         const jid = items[i].getAttribute("jid");
-        if (items[i].getAttribute("subscription") === "both") {
+        if (items[i].getAttribute("subscription") === "both" || items[i].getAttribute("ask") === "subscription" ) {
           contacts[jid] = this.roster[jid] || { jid, status: "offline", statusMessage: "" }; 
           this.sendPresenceProbe(jid);
         }
@@ -162,6 +215,8 @@ export class XMPPClient {
     this.subscriptionQueue = [];
     this.onRosterReceived = () => {};
     this.onSubscriptionReceived = () => {};
+    this.onMessageReceived = () => {};
+
     this.jid = "";
     this.status = "online";
     this.statusMessage = "Available";
@@ -180,6 +235,10 @@ export class XMPPClient {
 
   setOnSubscriptionReceived(callback) {
     this.onSubscriptionReceived = callback;
+  }
+
+  setOnMessageReceived(callback) {
+    this.onMessageReceived = callback;
   }
 
   getProfile(jid, onProfileReceived) {
