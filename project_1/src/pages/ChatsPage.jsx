@@ -142,23 +142,27 @@ const ChatsPage = () => {
             </div>
             <div className={styles.messageInputContainer}>
               <input
-                type="file"
-                onChange={handleSendFile}
-                className={styles.fileInput}
-              />
-              <input
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 className={styles.messageInput}
                 placeholder="Type a message..."
               />
+              <label htmlFor="fileInput" className={styles.fileInputLabel}>
+                &#128392;
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                className={styles.fileInput}
+                onChange={handleSendFile}
+              />
               <button
                 onClick={handleSendMessage}
                 className={styles.sendButton}
                 disabled={!newMessage.trim()}
               >
-                Send
+                &#128232;&nbsp;Send
               </button>
             </div>
           </>

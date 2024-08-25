@@ -1,6 +1,6 @@
 .messageTrayContainer {
   display: flex;
-  height: 80vh; /* Full height of the viewport */
+  height: 80vh;
   background-color: #f5f5f5;
 }
 
@@ -41,12 +41,12 @@
   flex-direction: column;
   padding: 1rem;
   background-color: #fafafa;
-  overflow: hidden; /* Prevents overflow from affecting layout */
+  overflow: hidden;
 }
 
 .messages {
-  flex: 1; /* Take up remaining space */
-  overflow-y: auto; /* Enable scrolling */
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   padding-right: 1rem;
@@ -64,14 +64,14 @@
 }
 
 .myMessage {
-  align-self: flex-end; /* Aligns your message to the right */
+  align-self: flex-end;
   background-color: #3498db;
   color: white;
   border-radius: 15px 15px 0 15px;
 }
 
 .theirMessage {
-  align-self: flex-start; /* Aligns the other user's message to the left */
+  align-self: flex-start;
   background-color: #ecf0f1;
   color: #2c3e50;
   border-radius: 15px 15px 15px 0;
@@ -96,12 +96,13 @@
 }
 
 .messageInput {
-  flex: 1;
+  width: 80%;
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
+  margin-right: 0.5rem;
 }
 
 .messageInput:focus {
@@ -109,20 +110,39 @@
   outline: none;
 }
 
-.sendButton {
-  background-color: #3498db;
-  color: white;
-  border: none;
+.sendButton,
+.fileInputLabel {
+  width: 100%; /* Ensure consistent width for the button and file label */
   padding: 0.6rem 1rem;
-  margin-left: 0.5rem;
   cursor: pointer;
   border-radius: 4px;
   font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
+.sendButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  margin-right: 0.5rem;
+}
+
 .sendButton:hover {
   background-color: #2980b9;
+}
+
+.fileInputLabel {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+}
+
+.fileInputLabel:hover {
+  background-color: #2980b9;
+}
+
+.fileInput {
+  display: none;
 }
 
 .noContactSelected {
@@ -187,3 +207,4 @@
 .dnd {
   color: red;
 }
+
