@@ -13,6 +13,7 @@ const ChatsPage = () => {
 
   useEffect(() => {
     client.setOnMessageReceived(handleMessageReceived);
+    client.setOnFileReceived(handleFileReceived);
     client.setOnRosterReceived(setContacts);
     client.fetchRoster();
     client.fetchOldMessages();
@@ -23,13 +24,17 @@ const ChatsPage = () => {
     const messageId = `${userJid}-${timestamp.getTime()}-${message}`; // Create a unique ID for the message
 
     if (processedMessages.current.has(messageId)) {
-      return; // Skip if the message has already been processed
+      return;
     }
 
-    processedMessages.current.add(messageId); // Mark this message as processed
+    processedMessages.current.add(messageId);
 
     setMessageHistory((prev) => {
-      const updatedMessages = [...(prev[userJid] || []), { from, message, timestamp }];
+      const updatedMessages = [...(prev[userJid] || []), {
+        from,
+        message,
+        timestamp
+      }];
       updatedMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
       
       return {
@@ -39,13 +44,48 @@ const ChatsPage = () => {
     });
   };
 
+  const handleFileReceived = (to, from, fileName, fileUrl, timestamp) => {
+    const userJid = from === client.jid ? to : from;
+    const message = from === client.jid ? "File" : "Received file";
+    const messageId = `${userJid}-${timestamp.getTime()}-${fileName}`;
+  
+    if (processedMessages.current.has(messageId)) {
+      return;
+    }
+  
+    processedMessages.current.add(messageId);
+  
+    setMessageHistory((prev) => {
+      const updatedMessages = [...(prev[userJid] || []), {
+        from,
+        message: `${message}: <a href="${fileUrl}" download="${fileName}">${fileName}</a>`,
+        timestamp,
+        isFile: true, // Mark it as a file message
+      }];
+      updatedMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  
+      return {
+        ...prev,
+        [userJid]: updatedMessages,
+      };
+    });
+  };  
+
   const handleSendMessage = () => {
     if (selectedContact && newMessage.trim()) {
       const currentTimestamp = new Date();
       client.sendMessage(selectedContact, newMessage);
       handleMessageReceived(selectedContact, client.jid, newMessage, currentTimestamp); // Optimistically update the chat
       console.log(`Message sent to ${selectedContact}: ${newMessage}`);
-      setNewMessage(""); // Clear the input
+      setNewMessage("");
+    }
+  };
+
+  const handleSendFile = (event) => {
+    if (selectedContact && event.target.files[0]) {
+      const file = event.target.files[0];
+      client.sendFile(selectedContact, file);
+      console.log(`File selected for sending: ${file.name}`);
     }
   };
 
@@ -80,24 +120,32 @@ const ChatsPage = () => {
           </div>
         ))}
       </div>
-
+  
       <div className={styles.messageHistory}>
         {selectedContact ? (
           <>
             <div className={styles.messages}>
               {(messageHistory[selectedContact] || []).map((msg, idx) => (
                 <div key={idx} className={msg.from === client.jid ? styles.myMessage : styles.theirMessage}>
-                  <div className={styles.messageContent}>{msg.message}</div>
+                  <div
+                    className={styles.messageContent}
+                    dangerouslySetInnerHTML={{ __html: msg.message }}
+                  />
                   <div className={styles.messageTimestamp}>
                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    &nbsp;|&nbsp;
+                    &nbsp;&nbsp;
                     {msg.timestamp.toLocaleDateString()}
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} /> {/* This div ensures we scroll to the last message */}
+              <div ref={messagesEndRef} /> {/* Scrolls to last message */}
             </div>
             <div className={styles.messageInputContainer}>
+              <input
+                type="file"
+                onChange={handleSendFile}
+                className={styles.fileInput}
+              />
               <input
                 type="text"
                 value={newMessage}
@@ -119,7 +167,7 @@ const ChatsPage = () => {
         )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default ChatsPage;

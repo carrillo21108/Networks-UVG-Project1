@@ -7,7 +7,7 @@
   max-width: 300px; /* Ensure a maximum width for very large screens */
   min-width: 200px; /* Ensure a minimum width for very small screens */
   height: 100vh; /* Full height of the viewport */
-  background-color: #5b7d9f;
+  background-color: #3498db;
   color: #ecf0f1;
   position: fixed;
   top: 0;
@@ -39,7 +39,7 @@
 
 .logoutLink {
   margin-top: auto; /* Push the logout link to the bottom */
-  color: #7b342c; /* Give it a distinct color (e.g., red) */
+  color: #1a5176; /* Give it a distinct color (e.g., red) */
   text-align: center; /* Center the logout link horizontally */
 }
 

@@ -34,16 +34,16 @@ const SideMenu = ({ onLogout }) => {
             <Link to="/chats">&#128490; Chats</Link>
           </li>
           <li>
-            <Link to="/contacts">&#128101; Contacs</Link>
+            <Link to="/contacts">&#128209; Contacs</Link>
           </li>
           <li>
             <Link to="/profile">&#128100; Profile</Link>
           </li>
           <li>
-            <Link to="/addContact">&#129309; Add Contact</Link>
+            <Link to="/addContact">&#128101; Add Contact</Link>
           </li>
           <li>
-            <Link to="/notifications">&#128276; Notifications</Link>
+            <Link to="/notifications">&#128227; Notifications</Link>
           </li>
         </ul>
       </nav>

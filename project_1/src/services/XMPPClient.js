@@ -22,6 +22,7 @@ export class XMPPClient {
     this.onRosterReceived = () => {};
     this.onSubscriptionReceived = () => {};
     this.onMessageReceived = () => {}; 
+    this.onFileReceived = () => {};
   }
 
   connect(jid, password, onConnect) {
@@ -32,7 +33,6 @@ export class XMPPClient {
       if (status === Strophe.Status.CONNECTED) {
         this.jid = jid;
         this.sendPresence(this.status, this.statusMessage);
-        this.fetchOldMessages();
         onConnect();
       } else if (status === Strophe.Status.AUTHFAIL) {
         console.error("Authentication failed");
@@ -62,11 +62,31 @@ export class XMPPClient {
     console.log(`Message sent to ${to}: ${body}`);
   }
 
+  sendFile(to, file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64Data = reader.result.split(',')[1];
+      const fileName = file.name;
+
+      const message = $msg({ to, type: "chat" })
+        .c("body").t(`File: ${fileName}`).up()
+        .c("file").t(base64Data).up()
+        .c("filename").t(fileName);
+
+      this.connection.send(message.tree());
+      console.log(`File sent to ${to}: ${fileName}`);
+    };
+    reader.readAsDataURL(file);
+    this.onMessageReceived(to, this.jid, `File: ${file.name}`, new Date());
+  }
+
   handleMessage(message) {
     const from = message.getAttribute("from");
     const to = message.getAttribute("to");
     const forwarded = message.getElementsByTagName("forwarded")[0];
-    
+    const fileElement = message.getElementsByTagName("file")[0];
+    const fileNameElement = message.getElementsByTagName("filename")[0];
+
     let body;
     let originalFrom;
     let originalTo;
@@ -90,6 +110,15 @@ export class XMPPClient {
   
       timestamp = new Date();
     }
+
+    if (fileElement && fileNameElement) {
+      const base64Data = fileElement.textContent;
+      const fileName = fileNameElement.textContent;
+      const fileUrl = `data:application/octet-stream;base64,${base64Data}`;
+      
+      this.onFileReceived(originalTo, Strophe.getBareJidFromJid(originalFrom), fileName, fileUrl, timestamp);
+      return true;
+    }
   
     if (body) {
       console.log(`Message received from ${Strophe.getBareJidFromJid(originalFrom)} at ${timestamp.toLocaleDateString()}: ${body}`);
@@ -98,6 +127,10 @@ export class XMPPClient {
   
     return true;
   }  
+
+  setOnFileReceived(callback) {
+    this.onFileReceived = callback;
+  }
 
   fetchOldMessages() {
     const mamQueryIQ = $iq({ type: "set", id: "mam1" })
