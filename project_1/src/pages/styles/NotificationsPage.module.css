@@ -37,19 +37,19 @@
   }
   
   .acceptButton {
-    background-color: #2ecc71;
+    background-color: #3498db;
     margin-right: 1rem;
   }
   
   .acceptButton:hover {
-    background-color: #27ae60;
+    background-color: #29668e;
   }
   
   .rejectButton {
-    background-color: #e74c3c;
+    background-color: #1a5176;
   }
   
   .rejectButton:hover {
-    background-color: #c0392b;
+    background-color: #123954;
   }
   
