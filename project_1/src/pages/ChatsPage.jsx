@@ -11,12 +11,18 @@ const ChatsPage = () => {
   const messagesEndRef = useRef(null); // Reference to the last message
   const processedMessages = useRef(new Set()); // Track processed messages
 
+  const [groups, setGroups] = useState([]); 
+
   useEffect(() => {
     client.setOnMessageReceived(handleMessageReceived);
     client.setOnFileReceived(handleFileReceived);
     client.setOnRosterReceived(setContacts);
+    client.setOnGroupMessageReceived(handleGroupMessageReceived);
+    
     client.fetchRoster();
     client.fetchOldMessages();
+    client.fetchAllRooms();
+    client.fetchJoinedRooms(setGroups);
   }, [client]);
 
   const handleMessageReceived = (to, from, message, timestamp) => {
@@ -69,14 +75,43 @@ const ChatsPage = () => {
         [userJid]: updatedMessages,
       };
     });
-  };  
+  };
+
+  const handleGroupMessageReceived = (room, nickname, message, timestamp) => {
+    const messageId = `${nickname}-${timestamp.getTime()}-${message}`; // Create a unique ID for the message
+
+    if (processedMessages.current.has(messageId)) {
+      return;
+    }
+
+    processedMessages.current.add(messageId);
+
+    setMessageHistory((prev) => {
+      const updatedMessages = [...(prev[room] || []), {
+        from: nickname,
+        message,
+        timestamp
+      }];
+      updatedMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+      return {
+        ...prev,
+        [room]: updatedMessages,
+      };
+    });
+  }
 
   const handleSendMessage = () => {
     if (selectedContact && newMessage.trim()) {
       const currentTimestamp = new Date();
-      client.sendMessage(selectedContact, newMessage);
-      handleMessageReceived(selectedContact, client.jid, newMessage, currentTimestamp); // Optimistically update the chat
-      console.log(`Message sent to ${selectedContact}: ${newMessage}`);
+
+      if (selectedContact.includes("@conference")) {
+        client.sendMessageToGroup(selectedContact, newMessage);
+      } else {
+        client.sendMessage(selectedContact, newMessage);
+        handleMessageReceived(selectedContact, client.jid, newMessage, currentTimestamp); // Optimistically update the chat
+      }
+
       setNewMessage("");
     }
   };
@@ -86,6 +121,39 @@ const ChatsPage = () => {
       const file = event.target.files[0];
       client.sendFile(selectedContact, file);
       console.log(`File selected for sending: ${file.name}`);
+    }
+  };
+
+  const createGroup = () => {
+    const groupName = prompt("Enter the group name:");
+    if (groupName) {
+      client.joinGroup(groupName, client.jid, (groupJid) => {
+        setGroups([...groups, groupJid]);
+      }, true);
+    }
+  };
+
+  const joinGroup = () => {
+    const groupName = prompt("Enter the group name:");
+    if (groupName) {
+      client.joinGroup(groupName, client.jid, (groupJid) => {
+        setGroups([...groups, groupJid]);
+      }, false);
+    }
+  };
+
+  const inviteToGroup = () => {
+    const contactJid = selectedContact;
+    if (!contactJid) {
+      alert("Select a contact to invite to a group.");
+      return;
+    }
+
+    const groupJid = prompt("Enter the group JID to invite the contact to:");
+    if (groupJid) {
+      client.inviteToGroup(groupJid, contactJid, (response) => {
+        alert(`Contact invited to group: ${groupJid}`);
+      }, (err) => console.error("Group invitation failed", err));
     }
   };
 
@@ -99,6 +167,10 @@ const ChatsPage = () => {
   return (
     <div className={styles.messageTrayContainer}>
       <div className={styles.contactList}>
+        <div className={styles.groupButtons}>
+          <button onClick={createGroup} className={styles.groupButton}>&#128193; Create Group</button>
+          <button onClick={joinGroup} className={styles.groupButton}>&#128194; Join Group</button>
+        </div>
         {Object.entries(contacts).map(([jid, contact]) => (
           <div
             key={jid}
@@ -117,6 +189,12 @@ const ChatsPage = () => {
                 {contact.statusMessage || "No status message"}
               </span>
             </div>
+          </div>
+        ))}
+        {groups.map((groupJid) => (
+          <div key={groupJid} className={`${styles.contactItem} ${selectedContact === groupJid ? styles.selectedContact : ""}`} onClick={() => setSelectedContact(groupJid)}>
+            <div className={styles.circle}>{groupJid.charAt(0).toUpperCase()}</div>
+            <span className={styles.contactJid}>{groupJid}</span>
           </div>
         ))}
       </div>

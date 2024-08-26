@@ -208,3 +208,29 @@
   color: red;
 }
 
+.groupButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.groupButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.groupButton:last-child {
+  margin-right: 0;
+}
+
+.groupButton:hover {
+  background-color: #2980b9;
+}

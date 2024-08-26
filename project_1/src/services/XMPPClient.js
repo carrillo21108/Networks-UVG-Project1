@@ -1,4 +1,5 @@
 import { Strophe, $pres, $msg, $iq } from "strophe.js";
+import 'strophejs-plugin-muc';
 
 export class XMPPClient {
   static PRESENCE_TYPES = {
@@ -18,11 +19,13 @@ export class XMPPClient {
     this.jid = ""; 
     this.status = "online";
     this.statusMessage = "Available";
+    this.groups = [];
 
     this.onRosterReceived = () => {};
     this.onSubscriptionReceived = () => {};
     this.onMessageReceived = () => {}; 
     this.onFileReceived = () => {};
+    this.onGroupMessageReceived = () => {};
   }
 
   connect(jid, password, onConnect) {
@@ -83,6 +86,7 @@ export class XMPPClient {
   handleMessage(message) {
     const from = message.getAttribute("from");
     const to = message.getAttribute("to");
+
     const forwarded = message.getElementsByTagName("forwarded")[0];
     const fileElement = message.getElementsByTagName("file")[0];
     const fileNameElement = message.getElementsByTagName("filename")[0];
@@ -116,13 +120,27 @@ export class XMPPClient {
       const fileName = fileNameElement.textContent;
       const fileUrl = `data:application/octet-stream;base64,${base64Data}`;
       
+      console.log(`File received from ${Strophe.getBareJidFromJid(originalFrom)} at ${timestamp.toLocaleDateString()}: ${fileName}`);
       this.onFileReceived(originalTo, Strophe.getBareJidFromJid(originalFrom), fileName, fileUrl, timestamp);
       return true;
     }
+
+    const roomJid = Strophe.getBareJidFromJid(originalFrom); // Get room JID if it's a group message
+    const isGroupMessage = roomJid.includes('@conference.');
   
     if (body) {
-      console.log(`Message received from ${Strophe.getBareJidFromJid(originalFrom)} at ${timestamp.toLocaleDateString()}: ${body}`);
-      this.onMessageReceived(originalTo, Strophe.getBareJidFromJid(originalFrom), body, timestamp); 
+      if (isGroupMessage) {
+          // Handle group message
+          console.log(originalFrom);
+          const senderNickname = Strophe.getResourceFromJid(originalFrom); // Get the nickname of the sender
+          console.log(`Group message received in ${roomJid} from ${senderNickname} at ${timestamp.toLocaleDateString()}: ${body}`);
+          const username = senderNickname.split("@")[0];
+          this.onGroupMessageReceived(roomJid, senderNickname, username+": "+body, timestamp);
+      } else {
+          // Handle direct message
+          console.log(`Message received from ${Strophe.getBareJidFromJid(originalFrom)} at ${timestamp.toLocaleDateString()}: ${body}`);
+          this.onMessageReceived(originalTo, Strophe.getBareJidFromJid(originalFrom), body, timestamp);
+      }
     }
   
     return true;
@@ -339,5 +357,127 @@ export class XMPPClient {
     
     this.subscriptionQueue = this.subscriptionQueue.filter(jid => jid !== from);
     this.onSubscriptionReceived([...this.subscriptionQueue]);
+  }
+
+  inviteUserToGroup(groupJid, userJid, reason = "") {
+    const inviteMessage = $msg({ to: groupJid, from: this.jid })
+      .c("x", { xmlns: "http://jabber.org/protocol/muc#user" })
+      .c("invite", { to: userJid })
+      .c("reason").t(reason).up().up();
+
+    this.connection.send(inviteMessage.tree());
+    console.log(`Invitation sent to ${userJid} for group ${groupJid}`);
+  }
+
+  joinGroup(groupName, nickname, onSuccess) {
+    const roomJid = `${groupName}@conference.${this.domain}`;
+    const presence = $pres({
+        to: `${roomJid}/${nickname}`
+    }).c("x", { xmlns: "http://jabber.org/protocol/muc" });
+
+    this.connection.send(presence.tree(), () => {
+        console.log(`Joined room: ${roomJid}`);
+        onSuccess(roomJid);
+    }, (err) => {
+        console.error(`Failed to join room: ${roomJid}`, err);
+    });
+  }
+
+  createGroup(groupName, nickname, onSuccess) {
+    const roomJid = `${groupName}@conference.${this.domain}`;
+
+    const presence = $pres({
+      to: `${roomJid}/${nickname}`
+    }).c("x", { xmlns: "http://jabber.org/protocol/muc" });
+
+    this.connection.send(presence.tree())
+
+    setTimeout(() => {
+      const createIQ = $iq({ type: "set", to: roomJid })
+        .c("query", { xmlns: "http://jabber.org/protocol/muc#owner" })
+        .c("x", { xmlns: "jabber:x:data", type: "submit" })
+        .c("field", { var: "FORM_TYPE" })
+        .c("value").t("http://jabber.org/protocol/muc#roomconfig").up().up()
+        .c("field", { var: "muc#roomconfig_persistentroom" })
+        .c("value").t("1").up().up()
+        .c("field", { var: "muc#roomconfig_membersonly" })
+        .c("value").t("0").up().up()
+        .c("field", { var: "muc#roomconfig_allowinvites" })
+        .c("value").t("1").up().up()
+        .c("field", { var: "muc#roomconfig_publicroom" })
+        .c("value").t("1").up().up()
+
+      this.connection.sendIQ(createIQ, (iq) => {
+        console.log("Room created successfully:", roomJid)
+        onSuccess(roomJid);
+      }, (error) => {
+        console.error("Error creating room:", error)
+      })
+    }, 500)
+  }
+
+  sendMessageToGroup(groupJid, message) {
+    const msg = $msg({ to: groupJid, type: "groupchat" })
+      .c("body").t(message);
+    this.connection.send(msg.tree());
+    console.log(`Message sent to group ${groupJid}: ${message}`);
+  }
+
+  leaveGroup(groupJid, nickname) {
+    const roomJid = `${groupJid}@conference.${this.domain}/${nickname}`;
+    this.connection.muc.leave(roomJid, nickname, () => {
+      console.log(`Left the group ${groupJid}`);
+    });
+  }
+
+  fetchAllRooms() {
+    const mucService = `conference.${this.domain}`;
+    const discoItemsIQ = $iq({ type: "get", to: mucService })
+        .c("query", { xmlns: "http://jabber.org/protocol/disco#items" });
+
+    this.connection.sendIQ(discoItemsIQ, (iq) => {
+        const items = iq.getElementsByTagName("item");
+        const rooms = [];
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const roomJid = item.getAttribute("jid");
+            const roomName = item.getAttribute("name");
+            rooms.push({ jid: roomJid, name: roomName });
+        }
+
+        console.log("All rooms:", rooms);
+    });
+  }
+
+  fetchJoinedRooms(onSuccess) {
+    const bookmarksIQ = $iq({ type: "get" })
+        .c("query", { xmlns: "jabber:iq:private" })
+        .c("storage", { xmlns: "storage:bookmarks" });
+
+    this.connection.sendIQ(bookmarksIQ, (iq) => {
+      console.log("Bookmarks received:", iq);
+        const storage = iq.getElementsByTagName("storage")[0];
+        if (!storage) {
+            console.error("No bookmarks found");
+            onError(new Error("No bookmarks found"));
+            return;
+        }
+
+        const roomNodes = storage.getElementsByTagName("conference");
+        const rooms = [];
+        for (let i = 0; i < roomNodes.length; i++) {
+            const roomNode = roomNodes[i];
+            const roomJid = roomNode.getAttribute("jid");
+            const roomName = roomNode.getAttribute("name");
+            rooms.push({ jid: roomJid, name: roomName });
+        }
+
+        onSuccess(rooms);
+    });
+  }
+
+  setOnGroupMessageReceived(callback) {
+    this.onGroupMessageReceived = callback;
   }
 }
