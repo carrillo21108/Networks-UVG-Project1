@@ -1,73 +1,82 @@
-/* src/pages/ContactsPage.module.css */
+/* src/pages/styles/ContactsPage.module.css */
+/* Main container for the contacts page */
 .contactsPage {
-  padding: 2em;
+  padding: 2em; /* Add padding around the page content */
 }
 
+/* Style for the list of contacts */
 .contactList {
-  list-style: none;
-  padding: 0;
+  list-style: none; /* Remove default list styling (bullets) */
+  padding: 0; /* Remove default padding for a clean layout */
 }
 
+/* Style for each contact item in the list */
 .contactItem {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  padding: 1em;
-  margin-bottom: 0.5em;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f7f7f7;
+  display: flex; /* Use flexbox to arrange content horizontally */
+  align-items: center; /* Center items vertically within the contact item */
+  padding: 1em; /* Add padding inside each contact item for spacing */
+  margin-bottom: 0.5em; /* Space between each contact item */
+  border: 1px solid #ccc; /* Light gray border around each item */
+  border-radius: 8px; /* Rounded corners for each item */
+  background-color: #f7f7f7; /* Light gray background color */
 }
 
+/* Style for the circle avatar in each contact item */
 .circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* Make the div a circle */
-  background-color: #3498db;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-right: 1rem;
+  width: 40px; /* Set a fixed width for the circle */
+  height: 40px; /* Set a fixed height for the circle */
+  border-radius: 50%; /* Make the div a perfect circle */
+  background-color: #3498db; /* Blue background color for the avatar */
+  color: #ffffff; /* White text color for contrast */
+  display: flex; /* Use flexbox to center content inside the circle */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  font-size: 1rem; /* Set the font size for the initial inside the circle */
+  font-weight: bold; /* Make the initial bold */
+  margin-right: 1rem; /* Space between the circle and the contact JID */
 }
 
+/* Style for the contact JID text */
 .contactJid {
-  font-weight: bold;
-  display: block;
-  color: #2c3e50;
-  flex-grow: 1; /* Allow JID to take up available space */
+  font-weight: bold; /* Make the contact JID bold */
+  display: block; /* Ensure the JID takes up a full line */
+  color: #2c3e50; /* Dark color for contrast */
+  flex-grow: 1; /* Allow the JID to take up available space in the flex container */
 }
 
+/* Container for the contact's status and status message */
 .statusContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; /* Use flexbox to align status and status message */
+  flex-direction: column; /* Stack the status and status message vertically */
+  align-items: center; /* Center the status and message horizontally */
 }
 
+/* Style for the contact's status text */
 .contactStatus {
-  font-size: 1rem;
-  text-transform: capitalize;
-  margin-bottom: 0.25rem;
+  font-size: 1rem; /* Standard font size for status text */
+  text-transform: capitalize; /* Capitalize the first letter of the status */
+  margin-bottom: 0.25rem; /* Space between status and status message */
 }
 
+/* Style for the contact's status message */
 .contactStatusMessage {
-  font-size: 0.6rem;
-  color: #7f8c8d;
+  font-size: 0.6rem; /* Smaller font size for the status message */
+  color: #7f8c8d; /* Gray color for a subtle appearance */
 }
 
+/* Color coding for different contact statuses */
 .online {
-  color: green;
+  color: green; /* Green for online status */
 }
 
 .away {
-  color: orange;
+  color: orange; /* Orange for away status */
 }
 
 .offline {
-  color: gray;
+  color: gray; /* Gray for offline status */
 }
 
 .dnd {
-  color: red;
+  color: red; /* Red for do not disturb status */
 }

@@ -1,237 +1,270 @@
+/* src/pages/styles/ChatsPage.module.css */
+/* Container for the entire messaging tray, including contact list and message history */
 .messageTrayContainer {
-  display: flex;
-  height: 80vh;
-  background-color: #f5f5f5;
-  margin-top: 40px;
+  display: flex; /* Use flexbox to align the contact list and message history side by side */
+  height: 80vh; /* Set the height to 80% of the viewport height */
+  background-color: #f5f5f5; /* Light gray background color */
+  margin-top: 40px; /* Add space above the container */
 }
 
+/* Styling for the contact list on the left side */
 .contactList {
-  width: 40%;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
-  padding: 1rem;
-  background-color: #fff;
+  width: 40%; /* Contact list takes up 40% of the container width */
+  border-right: 1px solid #ddd; /* Light border to separate the contact list from the message history */
+  overflow-y: auto; /* Enable vertical scrolling for long contact lists */
+  padding: 1rem; /* Padding inside the contact list for spacing */
+  background-color: #fff; /* White background for the contact list */
 }
 
+/* Styling for each contact item in the list */
 .contactItem {
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block;
-  color: #2c3e50;
-  flex-grow: 1;
-  font-weight: bold;
-  font-size: 0.8rem;
-  display: flex;
+  padding: 0.75rem 1rem; /* Padding inside each contact item for spacing */
+  cursor: pointer; /* Change the cursor to a pointer to indicate it's clickable */
+  border-bottom: 1px solid #eee; /* Light border between contacts */
+  border-radius: 4px; /* Slight rounding of the contact item corners */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+  display: block; /* Display as a block element */
+  color: #2c3e50; /* Dark color for contact text */
+  flex-grow: 1; /* Allow the contact item to grow if necessary */
+  font-weight: bold; /* Bold text for contact names */
+  font-size: 0.8rem; /* Slightly smaller font size */
+  display: flex; /* Use flexbox to align content horizontally */
 }
 
+/* Hover effect for contact items */
 .contactItem:hover {
-  background-color: #f0f0f0;
-  transform: translateX(2px);
+  background-color: #f0f0f0; /* Light gray background on hover */
+  transform: translateX(2px); /* Slightly move the item to the right on hover */
 }
 
+/* Styling for the selected contact */
 .selectedContact {
-  background-color: #e0e0e0;
+  background-color: #e0e0e0; /* Slightly darker background for the selected contact */
 }
 
+/* Container for the message history section */
 .messageHistory {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  background-color: #fafafa;
-  overflow: hidden;
+  flex: 1; /* Take up remaining space after the contact list */
+  display: flex; /* Use flexbox to align content vertically */
+  flex-direction: column; /* Stack messages vertically */
+  padding: 1rem; /* Padding around the message history */
+  background-color: #fafafa; /* Very light gray background for the message history */
+  overflow: hidden; /* Hide any overflow content */
 }
 
+/* Container for the individual messages */
 .messages {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding-right: 1rem;
-  margin-bottom: 1rem;
+  flex: 1; /* Allow messages to fill available space */
+  overflow-y: auto; /* Enable vertical scrolling for the message history */
+  display: flex; /* Use flexbox to align messages vertically */
+  flex-direction: column; /* Stack messages vertically */
+  padding-right: 1rem; /* Padding on the right for spacing */
+  margin-bottom: 1rem; /* Space below the messages */
 }
 
+/* Common styling for both sent and received messages */
 .myMessage,
 .theirMessage {
-  padding: 0.6rem 1rem;
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
-  max-width: 70%;
-  line-height: 1.4;
-  position: relative;
+  padding: 0.6rem 1rem; /* Padding inside each message bubble */
+  border-radius: 12px; /* Round the corners of the message bubbles */
+  margin-bottom: 0.75rem; /* Space below each message */
+  max-width: 70%; /* Limit the width of each message */
+  line-height: 1.4; /* Set line height for better readability */
+  position: relative; /* Position relative for additional content like timestamps */
 }
 
+/* Styling for sent messages */
 .myMessage {
-  align-self: flex-end;
-  background-color: #3498db;
-  color: white;
-  border-radius: 15px 15px 0 15px;
+  align-self: flex-end; /* Align sent messages to the right */
+  background-color: #3498db; /* Blue background color for sent messages */
+  color: white; /* White text color */
+  border-radius: 15px 15px 0 15px; /* Custom border-radius for sent messages */
 }
 
+/* Styling for received messages */
 .theirMessage {
-  align-self: flex-start;
-  background-color: #ecf0f1;
-  color: #2c3e50;
-  border-radius: 15px 15px 15px 0;
+  align-self: flex-start; /* Align received messages to the left */
+  background-color: #ecf0f1; /* Light gray background color for received messages */
+  color: #2c3e50; /* Dark text color */
+  border-radius: 15px 15px 15px 0; /* Custom border-radius for received messages */
 }
 
+/* Styling for the message content */
 .messageContent {
-  margin-bottom: 0.3rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.3rem; /* Space below the message content */
+  font-size: 0.95rem; /* Set font size for message content */
 }
 
+/* Styling for the message timestamp */
 .messageTimestamp {
-  font-size: 0.75rem;
-  text-align: right;
-  color: #95a5a6;
+  font-size: 0.75rem; /* Smaller font size for timestamps */
+  text-align: right; /* Align timestamps to the right */
+  color: #95a5a6; /* Light gray color for timestamps */
 }
 
+/* Container for the message input and send button */
 .messageInputContainer {
-  align-items: center;
-  border-top: 1px solid #ddd;
-  padding: 0.75rem;
-  background-color: #fff;
+  align-items: center; /* Center items vertically */
+  border-top: 1px solid #ddd; /* Border at the top to separate from message history */
+  padding: 0.75rem; /* Padding inside the input container */
+  background-color: #fff; /* White background for the input container */
 }
 
+/* Styling for the message input field */
 .messageInput {
-  width: 80%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  margin-right: 0.5rem;
+  width: 80%; /* Set the width of the input field */
+  padding: 0.6rem; /* Padding inside the input field */
+  border: 1px solid #ccc; /* Light border around the input field */
+  border-radius: 4px; /* Slight rounding of the input field corners */
+  font-size: 1rem; /* Set the font size */
+  transition: border-color 0.3s ease; /* Smooth transition for the border color */
+  margin-right: 0.5rem; /* Space between the input field and send button */
 }
 
+/* Styling for the message input field when focused */
 .messageInput:focus {
-  border-color: #3498db;
-  outline: none;
+  border-color: #3498db; /* Change border color to blue when focused */
+  outline: none; /* Remove default outline */
 }
 
+/* Common styling for the send button and file input label */
 .sendButton,
 .fileInputLabel {
   width: 100%; /* Ensure consistent width for the button and file label */
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  padding: 0.6rem 1rem; /* Padding inside the button and label */
+  cursor: pointer; /* Change cursor to pointer for better UX */
+  border-radius: 4px; /* Slight rounding of the corners */
+  font-size: 1rem; /* Set font size */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
+/* Styling for the send button */
 .sendButton {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  margin-right: 0.5rem;
+  background-color: #3498db; /* Blue background for the send button */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  margin-right: 0.5rem; /* Space between send button and file input label */
 }
 
+/* Hover effect for the send button */
 .sendButton:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
+/* Styling for the file input label */
 .fileInputLabel {
-  background-color: #3498db;
-  color: white;
-  text-align: center;
+  background-color: #3498db; /* Blue background for the file input label */
+  color: white; /* White text color */
+  text-align: center; /* Center the text inside the label */
 }
 
+/* Hover effect for the file input label */
 .fileInputLabel:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
+/* Hide the actual file input element */
 .fileInput {
-  display: none;
+  display: none; /* Hide the file input field */
 }
 
+/* Styling for the message shown when no contact is selected */
 .noContactSelected {
-  text-align: center;
-  color: #95a5a6;
-  margin-top: 2rem;
-  font-size: 1rem;
+  text-align: center; /* Center the text */
+  color: #95a5a6; /* Light gray color for the text */
+  margin-top: 2rem; /* Space above the text */
+  font-size: 1rem; /* Set font size */
 }
 
+/* Styling for the circular avatar in the contact list */
 .circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #3498db;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-right: 1rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 20px; /* Set a fixed width for the circle */
+  height: 20px; /* Set a fixed height for the circle */
+  border-radius: 50%; /* Make the div a perfect circle */
+  background-color: #3498db; /* Blue background color for the avatar */
+  color: #ffffff; /* White text color */
+  display: flex; /* Use flexbox to center content inside the circle */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  font-size: 0.8rem; /* Set the font size for the initial inside the circle */
+  font-weight: bold; /* Make the initial bold */
+  margin-right: 1rem; /* Space between the circle and the contact JID */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Styling for the contact JID text */
 .contactJid {
-  font-weight: bold;
-  display: block;
-  color: #2c3e50;
-  flex-grow: 1;
+  font-weight: bold; /* Make the contact JID bold */
+  display: block; /* Ensure the JID takes up a full line */
+  color: #2c3e50; /* Dark color for contrast */
+  flex-grow: 1; /* Allow the JID to take up available space in the flex container */
 }
 
+/* Container for the contact's status and status message */
 .statusContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  display: flex; /* Use flexbox to align status and status message */
+  flex-direction: column; /* Stack the status and status message vertically */
+  align-items: flex-end; /* Align the status information to the right */
 }
 
+/* Styling for the contact's status text */
 .contactStatus {
-  font-size: 0.8rem;
-  text-transform: capitalize;
-  margin-bottom: 0.25rem;
+  font-size: 0.8rem; /* Set font size for status text */
+  text-transform: capitalize; /* Capitalize the first letter of the status */
+  margin-bottom: 0.25rem; /* Space between status and status message */
 }
 
+/* Styling for the contact's status message */
 .contactStatusMessage {
-  font-size: 0.6rem;
-  color: #7f8c8d;
+  font-size: 0.6rem; /* Smaller font size for the status message */
+  color: #7f8c8d; /* Gray color for a subtle appearance */
 }
 
+/* Color coding for different contact statuses */
 .online {
-  color: green;
+  color: green; /* Green for online status */
 }
 
 .away {
-  color: orange;
+  color: orange; /* Orange for away status */
 }
 
 .offline {
-  color: gray;
+  color: gray; /* Gray for offline status */
 }
 
 .dnd {
-  color: red;
+  color: red; /* Red for do not disturb status */
 }
 
+/* Container for group-related buttons */
 .groupButtons {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  display: flex; /* Use flexbox to align buttons side by side */
+  justify-content: space-between; /* Space out the buttons */
+  margin-bottom: 1rem; /* Space below the buttons */
 }
 
+/* Styling for the group action buttons */
 .groupButton {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  flex: 1;
-  margin-right: 0.5rem;
+  background-color: #3498db; /* Blue background for the buttons */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  padding: 0.5rem 1rem; /* Padding inside the buttons */
+  cursor: pointer; /* Change cursor to pointer for better UX */
+  border-radius: 4px; /* Slight rounding of the corners */
+  font-size: 1rem; /* Set font size */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  flex: 1; /* Allow the buttons to take up equal space */
+  margin-right: 0.5rem; /* Space between the buttons */
 }
 
+/* Remove right margin for the last button */
 .groupButton:last-child {
-  margin-right: 0;
+  margin-right: 0; /* Ensure last button doesn't have extra space */
 }
 
+/* Hover effect for the group action buttons */
 .groupButton:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; /* Darker blue on hover */
 }

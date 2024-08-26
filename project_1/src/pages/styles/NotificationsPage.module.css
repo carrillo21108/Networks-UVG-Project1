@@ -1,55 +1,63 @@
 /* src/pages/styles/NotificationsPage.module.css */
+/* Container for the notifications page content */
 .notificationsPage {
-    padding: 2em;
-  }
-  
-  .requestsList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .requestItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em;
-    margin-bottom: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-  }
-  
-  .requestItem span {
-    font-weight: bold;
-    color: #2c3e50;
-  }
-  
-  .acceptButton, .rejectButton {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    color: #fff;
-    width: auto;
-  }
-  
-  .acceptButton {
-    background-color: #3498db;
-    margin-right: 1rem;
-  }
-  
-  .acceptButton:hover {
-    background-color: #29668e;
-  }
-  
-  .rejectButton {
-    background-color: #1a5176;
-  }
-  
-  .rejectButton:hover {
-    background-color: #123954;
-  }
-  
+  padding: 2em; /* Add padding inside the container for spacing */
+}
+
+/* Style for the list of requests */
+.requestsList {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+/* Style for each individual request item */
+.requestItem {
+  display: flex; /* Use flexbox to align content horizontally */
+  justify-content: space-between; /* Space out the content (text and buttons) */
+  align-items: center; /* Center align items vertically */
+  padding: 1em; /* Add padding inside each request item */
+  margin-bottom: 0.5em; /* Add margin below each request item */
+  border: 1px solid #ccc; /* Light gray border around each item */
+  border-radius: 8px; /* Rounded corners for each item */
+  background-color: #f7f7f7; /* Light gray background color */
+}
+
+/* Style for the text inside each request item */
+.requestItem span {
+  font-weight: bold; /* Make the text bold */
+  color: #2c3e50; /* Darker text color */
+}
+
+/* General styles for the buttons (accept and reject) */
+.acceptButton, .rejectButton {
+  padding: 0.5rem 1rem; /* Add padding inside the buttons */
+  font-size: 1rem; /* Standard font size */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners for buttons */
+  transition: background-color 0.3s ease; /* Smooth transition for background color change */
+  color: #fff; /* White text color for readability */
+  width: auto; /* Auto width to fit the content */
+}
+
+/* Style for the accept button */
+.acceptButton {
+  background-color: #3498db; /* Blue background color */
+  margin-right: 1rem; /* Space between accept and reject buttons */
+}
+
+/* Hover effect for the accept button */
+.acceptButton:hover {
+  background-color: #29668e; /* Darker blue on hover */
+}
+
+/* Style for the reject button */
+.rejectButton {
+  background-color: #1a5176; /* Darker blue background color */
+}
+
+/* Hover effect for the reject button */
+.rejectButton:hover {
+  background-color: #123954; /* Even darker blue on hover */
+}

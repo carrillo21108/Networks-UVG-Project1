@@ -1,143 +1,158 @@
-/* src/components/ProfilePage.module.css */
+/* src/pages/styles/ProfilePage.module.css */
+/* Container for the profile page content */
 .profileContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: relative;
-  margin-top: 10%;
+  flex-direction: column; /* Align items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  padding: 2rem; /* Add space inside the container */
+  max-width: 600px; /* Restrict the width to ensure a clean layout */
+  margin: 0 auto; /* Center the container horizontally on the page */
+  background-color: #f7f7f7; /* Light background color for contrast */
+  border-radius: 8px; /* Round the corners of the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  text-align: center; /* Center-align the text inside the container */
+  position: relative; /* Relative positioning for possible child element positioning */
+  margin-top: 10%; /* Add margin from the top to vertically center on the page */
 }
 
+/* Style for the initial circle displaying the user's initial */
 .circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #3498db;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  width: 100px; /* Fixed width */
+  height: 100px; /* Fixed height */
+  border-radius: 50%; /* Make it a perfect circle */
+  background-color: #3498db; /* Blue background color */
+  color: #ffffff; /* White text color */
+  display: flex; /* Flexbox for centering content */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  font-size: 2.5rem; /* Large font size for visibility */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 1rem; /* Space below the circle */
 }
 
+/* Style for the profile title */
 .profileTitle {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-size: 2rem; /* Large font size */
+  color: #2c3e50; /* Dark text color */
+  margin-bottom: 1.5rem; /* Space below the title */
+  text-align: center; /* Center-align the title text */
 }
 
+/* Container for each profile item (label and value) */
 .profileItem {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  width: 100%;
+  display: flex; /* Use flexbox to align label and value */
+  justify-content: space-between; /* Spread label and value apart */
+  margin-bottom: 1rem; /* Space below each profile item */
+  width: 100%; /* Ensure the item takes full width */
 }
 
+/* Style for profile labels (e.g., "JID", "Status") */
 .profileLabel {
-  font-weight: bold;
-  color: #34495e;
+  font-weight: bold; /* Make the label text bold */
+  color: #34495e; /* Darker text color for the label */
 }
 
+/* Style for profile values (e.g., JID, status) */
 .profileValue {
-  color: #2c3e50;
-  margin-left: 25%;
+  color: #2c3e50; /* Text color for the value */
+  margin-left: 25%; /* Space from the label to the value */
 }
 
+/* Style for the select dropdown used for status selection */
 .profileSelect {
-  margin-left: 10%;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  width: 43.5%;
+  margin-left: 10%; /* Space between the label and dropdown */
+  padding: 0.5rem; /* Padding inside the dropdown */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light gray border */
+  font-size: 1rem; /* Standard font size */
+  width: 43.5%; /* Ensure width fits within layout */
 }
 
+/* Focus state for the select dropdown */
 .profileSelect:focus {
-  border-color: #3498db;
-  outline: none;
+  border-color: #3498db; /* Blue border on focus */
+  outline: none; /* Remove default outline */
 }
 
+/* Capitalize status values (e.g., "Online") */
 .contactStatus {
-  text-transform: capitalize;
+  text-transform: capitalize; /* Capitalize first letter */
 }
 
+/* Color coding for different statuses */
 .online {
-  color: green;
+  color: green; /* Green for "Online" status */
 }
 
 .away {
-  color: orange;
+  color: orange; /* Orange for "Away" status */
 }
 
 .offline {
-  color: gray;
+  color: gray; /* Gray for "Offline" status */
 }
 
 .dnd {
-  color: red;
+  color: red; /* Red for "Do Not Disturb" status */
 }
 
+/* Container for the status message input and update button */
 .statusMessageContainer {
-  display: flex;
-  align-items: center;
+  display: flex; /* Use flexbox to align input and button */
+  align-items: center; /* Center align the input and button */
 }
 
+/* Style for the status message input field */
 .profileInput {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem; /* Add padding inside the input */
   border-radius: 4px 0 0 4px; /* Rounded left corners */
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  flex-grow: 1;
-  box-sizing: border-box; /* Ensure padding is included in height */
+  border: 1px solid #ccc; /* Light gray border */
+  font-size: 1rem; /* Standard font size */
+  flex-grow: 1; /* Allow the input to grow within the container */
+  box-sizing: border-box; /* Include padding in the input's width */
 }
 
+/* Style for the button used to update the status message */
 .updateButton {
-  padding: 0.5rem 1rem;
-  background-color: #525252;
-  color: #fff;
-  border: 1px solid #525252;
+  padding: 0.5rem 1rem; /* Padding inside the button */
+  background-color: #525252; /* Gray background color */
+  color: #fff; /* White text color */
+  border: 1px solid #525252; /* Border color matches the background */
   border-radius: 0 4px 4px 0; /* Rounded right corners */
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box; /* Ensure padding is included in height */
-  margin-top: -24px; /* Align with input */
-  width: 1px; /* Ensure button is not wider than input */
-  height: 34px; /* Ensure button is not taller than input */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  display: flex; /* Use flexbox to align content */
+  align-items: center; /* Center align the content */
+  justify-content: center; /* Center align the content */
+  box-sizing: border-box; /* Include padding in button size */
+  margin-top: -24px; /* Align vertically with the input */
+  width: 1px; /* Adjust width to fit design */
+  height: 34px; /* Adjust height to match input */
 }
 
+/* Hover effect for the update button */
 .updateButton:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
+/* Style for the delete account button */
 .deleteButton {
-  margin-top: auto;
-  padding: 0.75rem 1.5rem;
-  background-color: #c73525;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: auto; /* Push the button to the bottom */
+  padding: 0.75rem 1.5rem; /* Padding inside the button */
+  background-color: #c73525; /* Red background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 1rem; /* Standard font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
   align-self: center; /* Center the button horizontally */
-  width: 30%;
+  width: 30%; /* Set the button width */
 }
 
+/* Hover effect for the delete button */
 .deleteButton:hover {
-  background-color: #590e06;
+  background-color: #590e06; /* Darker red on hover */
 }
-
