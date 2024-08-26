@@ -14,6 +14,13 @@
   left: 0;
   padding: 2em; /* Padding relative to the font size */
   box-sizing: border-box; /* Includes padding in the total width */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15); /* Add subtle shadow for depth */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.sideMenu:hover {
+  background-color: #2980b9; /* Darken background on hover */
+  transform: translateX(-10px); /* Slight shift for interaction feedback */
 }
 
 .sideMenu nav ul {
@@ -25,30 +32,48 @@
 
 .sideMenu nav ul li {
   margin: 1.5em 0; /* Using em for relative margin */
+  transition: transform 0.3s ease, color 0.3s ease; /* Add transition for hover effect */
+}
+
+.sideMenu nav ul li:hover {
+  transform: translateX(10px); /* Subtle shift on hover */
 }
 
 .sideMenu nav ul li a {
   color: #ecf0f1;
   text-decoration: none;
   font-size: 1.125em; /* Equivalent to 18px if the base font size is 16px */
+  display: block;
+  padding: 0.5em 0; /* Padding to make it easier to click */
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .sideMenu nav ul li a:hover {
-  text-decoration: none;
+  color: #ffffff; /* Brighten the text color on hover */
 }
 
 .logoutLink {
   margin-top: auto; /* Push the logout link to the bottom */
-  color: #1a5176; /* Give it a distinct color (e.g., red) */
+  color: #1a5176; /* A more neutral color */
   text-align: center; /* Center the logout link horizontally */
+  font-weight: bold; /* Highlight the logout option */
+  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.logoutLink:hover {
+  color: #f39c12; /* Highlight with a different color on hover */
+  transform: scale(1.1); /* Slightly increase size on hover */
 }
 
 .logoutLink a {
   text-decoration: none;
   color: inherit; /* Inherit the color from the parent */
   font-size: 1.125em;
+  display: block;
+  padding: 0.5em 0;
 }
 
 .logoutLink a:hover {
   text-decoration: none;
+  color: inherit; /* Ensure text remains the same color on hover */
 }

@@ -22,7 +22,6 @@ const ChatsPage = () => {
     client.fetchRoster();
     client.fetchOldMessages();
     client.fetchAllRooms();
-    client.fetchJoinedRooms(setGroups);
   }, [client]);
 
   const handleMessageReceived = (to, from, message, timestamp) => {
