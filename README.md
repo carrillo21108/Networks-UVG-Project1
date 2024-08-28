@@ -65,4 +65,5 @@ To get started with the XMPP Client React Application, follow the steps below:
   - **📁 File Transfer**: Send and receive files within your chats.
   - **👥 Groups**: Create groups, invite contacts, and manage your group chats.
 
+Need more information? Check out the [presentation](https://www.canva.com/design/DAGPFguWHCs/O9z8KZuy2Jfv3pZydDQFJg/view?utm_content=DAGPFguWHCs&utm_campaign=designshare&utm_medium=link&utm_source=editor#1)
 Developed by: [carrillo21108](https://github.com/carrillo21108)

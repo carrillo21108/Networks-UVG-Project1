@@ -453,9 +453,11 @@ export class XMPPClient {
       to: `${roomJid}/${nickname}`
     }).c("x", { xmlns: "http://jabber.org/protocol/muc" });
 
+    console.log("Joining room:", roomJid);
+
     this.connection.send(presence.tree(), () => {
       console.log(`Joined room: ${roomJid}`);
-      onSuccess(roomJid);
+      //onSuccess(roomJid);
     }, (err) => {
       console.error(`Failed to join room: ${roomJid}`, err);
     });
@@ -488,7 +490,7 @@ export class XMPPClient {
 
       this.connection.sendIQ(createIQ, (iq) => {
         console.log("Room created successfully:", roomJid)
-        onSuccess(roomJid);
+        //onSuccess(roomJid);
       }, (error) => {
         console.error("Error creating room:", error)
       })

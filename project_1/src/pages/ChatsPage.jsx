@@ -12,8 +12,6 @@ const ChatsPage = () => {
   const messagesEndRef = useRef(null); // Reference to auto-scroll to the last message
   const processedMessages = useRef(new Set()); // Track processed messages to avoid duplicates
 
-  const [groups, setGroups] = useState([]); // State to store joined groups
-
   // Set up message handlers and fetch initial data when the component mounts
   useEffect(() => {
     client.setOnMessageReceived(handleMessageReceived);
@@ -86,7 +84,7 @@ const ChatsPage = () => {
 
   // Handle received group messages
   const handleGroupMessageReceived = (room, nickname, message, timestamp) => {
-    const messageId = `${nickname}-${timestamp.getTime()}-${message}`; // Unique ID for the group message
+    const messageId = `${room}-${timestamp.getTime()}-${message}`; // Unique ID for the group message
 
     // Check if the group message has already been processed
     if (processedMessages.current.has(messageId)) {
@@ -140,9 +138,7 @@ const ChatsPage = () => {
   const createGroup = () => {
     const groupName = prompt("Enter the group name:");
     if (groupName) {
-      client.joinGroup(groupName, client.jid, (groupJid) => {
-        setGroups([...groups, groupJid]); // Add the new group to the state
-      }, true);
+      client.createGroup(groupName, client.jid);
     }
   };
 
@@ -150,9 +146,7 @@ const ChatsPage = () => {
   const joinGroup = () => {
     const groupName = prompt("Enter the group name:");
     if (groupName) {
-      client.joinGroup(groupName, client.jid, (groupJid) => {
-        setGroups([...groups, groupJid]); // Add the joined group to the state
-      }, false);
+      client.joinGroup(groupName, client.jid);
     }
   };
 
@@ -205,13 +199,6 @@ const ChatsPage = () => {
                 {contact.statusMessage || "No status message"}
               </span>
             </div>
-          </div>
-        ))}
-        {/* Display the list of joined groups */}
-        {groups.map((groupJid) => (
-          <div key={groupJid} className={`${styles.contactItem} ${selectedContact === groupJid ? styles.selectedContact : ""}`} onClick={() => setSelectedContact(groupJid)}>
-            <div className={styles.circle}>{groupJid.charAt(0).toUpperCase()}</div>
-            <span className={styles.contactJid}>{groupJid}</span>
           </div>
         ))}
       </div>
